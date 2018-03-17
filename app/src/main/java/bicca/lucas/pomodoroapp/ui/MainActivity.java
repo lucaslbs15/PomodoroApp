@@ -1,7 +1,9 @@
-package bicca.lucas.pomodoroapp;
+package bicca.lucas.pomodoroapp.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import bicca.lucas.pomodoroapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
