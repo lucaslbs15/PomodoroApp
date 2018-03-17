@@ -9,9 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
 import bicca.lucas.pomodoroapp.R;
 import bicca.lucas.pomodoroapp.databinding.FragmentHistoryPomodoroBinding;
+import bicca.lucas.pomodoroapp.ui.historypomodoro.interaction.HistoryPomodoroInteraction;
 import bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel.HistoryPomodoroViewModel;
+import bicca.lucas.pomodoroapp.ui.model.HistoryPomodoro;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +27,7 @@ import bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel.HistoryPomodoroViewM
  * Use the {@link HistoryPomodoroFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HistoryPomodoroFragment extends Fragment {
+public class HistoryPomodoroFragment extends Fragment implements HistoryPomodoroInteraction {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,7 +40,8 @@ public class HistoryPomodoroFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private FragmentHistoryPomodoroBinding binding;
-    private HistoryPomodoroViewModel viewModel;
+    @Inject
+    public HistoryPomodoroViewModel viewModel;
 
     public HistoryPomodoroFragment() {
         // Required empty public constructor
@@ -71,6 +78,9 @@ public class HistoryPomodoroFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history_pomodoro, container, false);
+        viewModel.setInteraction(this);
+        viewModel.loadHistory();
+        binding.setHistoryPomodoroViewModel(viewModel);
         return binding.getRoot();
     }
 
@@ -96,6 +106,11 @@ public class HistoryPomodoroFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void showHistory(ArrayList<HistoryPomodoro> historyPomodoros) {
+
     }
 
     /**

@@ -15,6 +15,10 @@ layouts and minimize the glue code necessary to bind your application logic and 
 * Design Support Library is being used to implement ViewPager component
 * Example: https://android.jlelse.eu/tablayout-and-viewpager-in-your-android-app-738b8840c38a
 
+#### Dagger 
+* Is a dependecy injector framework and is very helpful
+* Link: http://square.github.io/dagger/
+
 
 
 
