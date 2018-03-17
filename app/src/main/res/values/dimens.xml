@@ -2,4 +2,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fragment_new_pomodoro_fab_margin">16dp</dimen>
     <dimen name="fragment_new_pomodoro_timer_size">26sp</dimen>
+    <dimen name="item_history_padding">10dp</dimen>
+    <dimen name="item_history_time_size">24sp</dimen>
 </resources>

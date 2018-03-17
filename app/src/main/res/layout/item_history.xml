@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="itemHistoryViewModel"
+            type="bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel.ItemHistoryPomodoroViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/item_history_padding">
+
+        <TextView
+            android:id="@+id/item_history_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{itemHistoryViewModel.time}"
+            android:textColor="@color/colorHistoryTime"
+            android:textSize="@dimen/item_history_time_size"
+            tools:text="25:00"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_history_time"
+            android:text="@{itemHistoryViewModel.state}"
+            android:textColor="@color/colorPrimaryDark"
+            tools:text="Finished"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@{itemHistoryViewModel.date}"
+            android:textColor="@color/colorPrimaryDark"
+            tools:text="1m ago"/>
+
+    </RelativeLayout>
+</layout>

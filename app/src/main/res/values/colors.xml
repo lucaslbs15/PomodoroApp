@@ -7,4 +7,8 @@
     <color name="colorWaitingState">#CCCCCC</color>
     <color name="colorRunningState">#FF4351</color>
     <color name="colorFabBackground">#FF4351</color>
+    
+    <color name="colorHistoryTime">@android:color/background_dark</color>
+    <color name="colorHistoryState">@color/colorPrimaryDark</color>
+    <color name="colorHistoryDate">@color/colorPrimaryDark</color>
 </resources>
