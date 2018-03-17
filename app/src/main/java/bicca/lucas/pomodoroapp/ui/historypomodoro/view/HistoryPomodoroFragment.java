@@ -1,6 +1,7 @@
 package bicca.lucas.pomodoroapp.ui.historypomodoro.view;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import bicca.lucas.pomodoroapp.R;
+import bicca.lucas.pomodoroapp.databinding.FragmentHistoryPomodoroBinding;
+import bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel.HistoryPomodoroViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,9 @@ public class HistoryPomodoroFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private FragmentHistoryPomodoroBinding binding;
+    private HistoryPomodoroViewModel viewModel;
 
     public HistoryPomodoroFragment() {
         // Required empty public constructor
@@ -64,8 +70,8 @@ public class HistoryPomodoroFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_pomodoro, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history_pomodoro, container, false);
+        return binding.getRoot();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
