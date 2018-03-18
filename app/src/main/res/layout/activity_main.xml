@@ -11,7 +11,11 @@
             android:id="@+id/activity_main_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"/>
+            app:tabMode="fixed"
+            app:tabBackground="@color/colorPrimary"
+            app:tabTextColor="@color/colorTabUnselected"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabIndicatorColor="@android:color/white"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/activity_main_viewpager"
