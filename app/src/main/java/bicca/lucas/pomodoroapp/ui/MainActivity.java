@@ -15,5 +15,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        initMainFragmentPagerAdapter();
+    }
+
+    private void initMainFragmentPagerAdapter() {
+        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(this, getSupportFragmentManager());
+        binding.activityMainViewpager.setAdapter(adapter);
+        binding.activityMainTablayout.setupWithViewPager(binding.activityMainViewpager);
     }
 }
