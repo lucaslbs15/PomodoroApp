@@ -5,5 +5,5 @@ import android.content.Context;
 public interface InteractionBase {
 
     Context getContext();
-    String getString(int stringId);
+    String getStringFromId(int stringId);
 }

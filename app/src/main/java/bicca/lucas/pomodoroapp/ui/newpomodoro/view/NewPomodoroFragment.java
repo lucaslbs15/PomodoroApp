@@ -1,10 +1,13 @@
 package bicca.lucas.pomodoroapp.ui.newpomodoro.view;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +32,10 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     private String mParam1;
     private String mParam2;
 
-    FragmentNewPomodoroBinding binding;
+    private FragmentNewPomodoroBinding binding;
     @Inject
     NewPomodoroViewModel viewModel;
+    private long currentTime;
 
     public NewPomodoroFragment() {
         // Required empty public constructor
@@ -96,8 +100,8 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
         binding.fragmentNewPomodoroTimer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                Log.i("Bicca", String.format("Time: %s", chronometer.getBase() - SystemClock.elapsedRealtime()));
-                //SystemClock.elapsedRealtime() - mChronometer.getBase()
+                currentTime = chronometer.getBase() - SystemClock.elapsedRealtime();
+                viewModel.validateFinish();
             }
         });
     }
@@ -121,12 +125,32 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     @Override
     public void finishPomodoro() {
         restartChronometer();
-        viewModel.finishPomodoro();
+    }
+
+    @Override
+    public long getCurrentTime() {
+        return currentTime;
+    }
+
+    @Override
+    public void showNotification(String message) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        notificationManager.notify(15, builder.build());
     }
 
     private void restartChronometer() {
         binding.fragmentNewPomodoroTimer.stop();
         resetCount();
         binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_play_arrow_white);
+    }
+
+    @Override
+    public String getStringFromId(int stringId) {
+        return getString(stringId);
     }
 }

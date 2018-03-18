@@ -106,4 +106,9 @@ public class HistoryPomodoroFragment extends Fragment implements HistoryPomodoro
     public Context getContext() {
         return getActivity().getBaseContext();
     }
+
+    @Override
+    public String getStringFromId(int stringId) {
+        return getString(stringId);
+    }
 }

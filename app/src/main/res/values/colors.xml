@@ -13,4 +13,6 @@
     <color name="colorHistoryDate">#918d8d</color>
 
     <color name="colorTabUnselected">#CCCCCC</color>
+
+    <color name="colorIconNotification">@color/colorPrimaryDark</color>
 </resources>

@@ -13,4 +13,6 @@
     <string name="state_running">Running</string>
     <string name="state_finished">Finished</string>
     <string name="state_stopped">Stopped</string>
+
+    <string name="notification_pomodoro_finished">Pomodoro finished!</string>
 </resources>

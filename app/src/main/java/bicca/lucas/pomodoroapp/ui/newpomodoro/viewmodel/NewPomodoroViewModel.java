@@ -1,10 +1,10 @@
 package bicca.lucas.pomodoroapp.ui.newpomodoro.viewmodel;
 
 import android.databinding.BaseObservable;
-import android.databinding.ObservableField;
 
 import javax.inject.Inject;
 
+import bicca.lucas.pomodoroapp.R;
 import bicca.lucas.pomodoroapp.ui.model.StateEnum;
 import bicca.lucas.pomodoroapp.ui.newpomodoro.interaction.NewPomodoroInteraction;
 
@@ -41,11 +41,15 @@ public class NewPomodoroViewModel extends BaseObservable {
     }
 
     public void validateFinish() {
-
+        if (interaction.getCurrentTime() < 0) {
+            finishPomodoro();
+        }
     }
 
     public void finishPomodoro() {
-
+        interaction.finishPomodoro();
+        //TODO salvar no banco
+        interaction.showNotification(interaction.getStringFromId(R.string.notification_pomodoro_finished));
     }
 
 }
