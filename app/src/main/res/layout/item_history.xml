@@ -3,10 +3,9 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="itemHistoryViewModel"
-            type="bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel.ItemHistoryPomodoroViewModel"/>
+            type="bicca.lucas.pomodoroapp.ui.model.HistoryPomodoro"/>
     </data>
 
     <RelativeLayout
@@ -27,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_history_time"
-            android:text="@{itemHistoryViewModel.state}"
-            android:textColor="@color/colorPrimaryDark"
+            android:text="@{itemHistoryViewModel.stateDescription}"
+            android:textColor="@color/colorHistoryState"
             tools:text="Finished"/>
 
         <TextView
@@ -37,7 +36,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="@{itemHistoryViewModel.date}"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorHistoryDate"
             tools:text="1m ago"/>
 
     </RelativeLayout>

@@ -9,8 +9,8 @@
     <color name="colorFabBackground">#FF4351</color>
     
     <color name="colorHistoryTime">@android:color/background_dark</color>
-    <color name="colorHistoryState">@color/colorPrimaryDark</color>
-    <color name="colorHistoryDate">@color/colorPrimaryDark</color>
+    <color name="colorHistoryState">#918d8d</color>
+    <color name="colorHistoryDate">#918d8d</color>
 
     <color name="colorTabUnselected">#CCCCCC</color>
 </resources>

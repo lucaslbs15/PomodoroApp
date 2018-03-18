@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,16 @@ public class HistoryPomodoroFragment extends Fragment implements HistoryPomodoro
 
     @Override
     public void showHistory(ArrayList<HistoryPomodoro> historyPomodoros) {
+        binding.fragmentHistoryPomodoroRecycler.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.fragmentHistoryPomodoroRecycler.setLayoutManager(linearLayoutManager);
+        ItemHistoryPomodoroAdapter adapter = new ItemHistoryPomodoroAdapter(historyPomodoros, getContext());
+        binding.fragmentHistoryPomodoroRecycler.setAdapter(adapter);
+    }
 
+    @Override
+    public Context getContext() {
+        return getActivity().getBaseContext();
     }
 }

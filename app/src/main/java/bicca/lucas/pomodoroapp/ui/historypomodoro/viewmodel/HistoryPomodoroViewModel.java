@@ -26,9 +26,9 @@ public class HistoryPomodoroViewModel {
 
     private ArrayList<HistoryPomodoro> getMocks() {
         ArrayList<HistoryPomodoro> pomodoros = new ArrayList<>();
-        pomodoros.add(new HistoryPomodoro("25:00", StateEnum.RUNNING, "17/03/2015"));
-        pomodoros.add(new HistoryPomodoro("24:00", StateEnum.STOPPED, "16/03/2015"));
-        pomodoros.add(new HistoryPomodoro("23:00", StateEnum.FINISHED, "15/03/2015"));
+        pomodoros.add(new HistoryPomodoro(interaction.getContext(), "25:00", StateEnum.RUNNING, "17/03/2015"));
+        pomodoros.add(new HistoryPomodoro(interaction.getContext(), "24:00", StateEnum.STOPPED, "16/03/2015"));
+        pomodoros.add(new HistoryPomodoro(interaction.getContext(),"23:00", StateEnum.FINISHED, "15/03/2015"));
         return pomodoros;
     }
 
