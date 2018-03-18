@@ -92,12 +92,12 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
 
     private void initChonometer() {
         binding.fragmentNewPomodoroTimer.setCountDown(true);
-        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);
+        resetCount();
         binding.fragmentNewPomodoroTimer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-                Log.i("Bicca", String.format("onChronometerTick - format: %s, description: %s",
-                        chronometer.getFormat(), chronometer.getContentDescription()));
+                Log.i("Bicca", String.format("Time: %s", chronometer.getBase() - SystemClock.elapsedRealtime()));
+                //SystemClock.elapsedRealtime() - mChronometer.getBase()
             }
         });
     }
@@ -105,19 +105,28 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     @Override
     public void runPomodoro() {
         binding.fragmentNewPomodoroTimer.start();
-        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);//SystemClock.elapsedRealtime()
+        resetCount();
         binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_stop_white);
+    }
+
+    private void resetCount() {
+        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);
     }
 
     @Override
     public void stopPomodoro() {
-        binding.fragmentNewPomodoroTimer.stop();
-        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);
-        binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_play_arrow_white);
+        restartChronometer();
     }
 
     @Override
     public void finishPomodoro() {
+        restartChronometer();
+        viewModel.finishPomodoro();
+    }
 
+    private void restartChronometer() {
+        binding.fragmentNewPomodoroTimer.stop();
+        resetCount();
+        binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_play_arrow_white);
     }
 }
