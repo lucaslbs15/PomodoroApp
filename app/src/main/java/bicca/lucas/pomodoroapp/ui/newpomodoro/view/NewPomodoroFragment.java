@@ -71,7 +71,7 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
         injectDependecies();
         viewModel.setInteraction(this);
         binding.setNewPomodoroViewModel(viewModel);
-        initChonometerListener();
+        initChonometer();
         return binding.getRoot();
     }
 
@@ -90,7 +90,9 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
         super.onDetach();
     }
 
-    private void initChonometerListener() {
+    private void initChonometer() {
+        binding.fragmentNewPomodoroTimer.setCountDown(true);
+        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);
         binding.fragmentNewPomodoroTimer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
@@ -103,14 +105,14 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     @Override
     public void runPomodoro() {
         binding.fragmentNewPomodoroTimer.start();
-        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime());
+        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);//SystemClock.elapsedRealtime()
         binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_stop_white);
     }
 
     @Override
     public void stopPomodoro() {
         binding.fragmentNewPomodoroTimer.stop();
-        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime());
+        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);
         binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_play_arrow_white);
     }
 
