@@ -3,16 +3,23 @@ package bicca.lucas.pomodoroapp.ui.newpomodoro.view;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
+
+import javax.inject.Inject;
 
 import bicca.lucas.pomodoroapp.R;
 import bicca.lucas.pomodoroapp.databinding.FragmentNewPomodoroBinding;
 import bicca.lucas.pomodoroapp.ui.MainApplication;
+import bicca.lucas.pomodoroapp.ui.newpomodoro.interaction.NewPomodoroInteraction;
+import bicca.lucas.pomodoroapp.ui.newpomodoro.viewmodel.NewPomodoroViewModel;
 
-public class NewPomodoroFragment extends Fragment {
+public class NewPomodoroFragment extends Fragment implements NewPomodoroInteraction {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -23,6 +30,8 @@ public class NewPomodoroFragment extends Fragment {
     private String mParam2;
 
     FragmentNewPomodoroBinding binding;
+    @Inject
+    NewPomodoroViewModel viewModel;
 
     public NewPomodoroFragment() {
         // Required empty public constructor
@@ -60,6 +69,9 @@ public class NewPomodoroFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_new_pomodoro, container, false);
         injectDependecies();
+        viewModel.setInteraction(this);
+        binding.setNewPomodoroViewModel(viewModel);
+        initChonometerListener();
         return binding.getRoot();
     }
 
@@ -76,6 +88,34 @@ public class NewPomodoroFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void initChonometerListener() {
+        binding.fragmentNewPomodoroTimer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                Log.i("Bicca", String.format("onChronometerTick - format: %s, description: %s",
+                        chronometer.getFormat(), chronometer.getContentDescription()));
+            }
+        });
+    }
+
+    @Override
+    public void runPomodoro() {
+        binding.fragmentNewPomodoroTimer.start();
+        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime());
+        binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_stop_white);
+    }
+
+    @Override
+    public void stopPomodoro() {
+        binding.fragmentNewPomodoroTimer.stop();
+        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime());
+        binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_play_arrow_white);
+    }
+
+    @Override
+    public void finishPomodoro() {
 
     }
 }

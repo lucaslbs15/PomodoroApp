@@ -11,14 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:text="25:00"
+        <Chronometer
+            android:id="@+id/fragment_new_pomodoro_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:gravity="center"
             android:textSize="@dimen/fragment_new_pomodoro_timer_size"
-            android:text="@{newPomodoroViewModel.timer}"/>
+            android:layout_gravity="center"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fragment_new_pomodoro_fab"
