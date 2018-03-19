@@ -1,14 +1,11 @@
 package bicca.lucas.pomodoroapp.ui.newpomodoro.view;
 
-import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +18,7 @@ import bicca.lucas.pomodoroapp.databinding.FragmentNewPomodoroBinding;
 import bicca.lucas.pomodoroapp.ui.MainApplication;
 import bicca.lucas.pomodoroapp.ui.newpomodoro.interaction.NewPomodoroInteraction;
 import bicca.lucas.pomodoroapp.ui.newpomodoro.viewmodel.NewPomodoroViewModel;
+import bicca.lucas.pomodoroapp.ui.service.NotificationService;
 
 public class NewPomodoroFragment extends Fragment implements NewPomodoroInteraction {
     // TODO: Rename parameter arguments, choose names that match
@@ -134,13 +132,9 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
 
     @Override
     public void showNotification(String message) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-        notificationManager.notify(15, builder.build());
+        Intent intent = new Intent(getContext(), NotificationService.class);
+        intent.putExtra(getString(R.string.notification_intent_extras), message);
+        getActivity().startService(intent);
     }
 
     private void restartChronometer() {

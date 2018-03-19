@@ -15,4 +15,5 @@
     <string name="state_stopped">Stopped</string>
 
     <string name="notification_pomodoro_finished">Pomodoro finished!</string>
+    <string name="notification_intent_extras">message</string>
 </resources>
