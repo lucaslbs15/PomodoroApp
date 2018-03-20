@@ -14,7 +14,7 @@ public interface PomodoroDAO {
     @Insert
     long insert(Pomodoro pomodoro);
 
-    @Query("SELECT * FROM pomodoro ORDER BY date")
+    @Query("SELECT * FROM pomodoro ORDER BY id DESC")
     List<Pomodoro> listAll();
 
 }

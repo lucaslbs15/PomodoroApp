@@ -1,11 +1,15 @@
 package bicca.lucas.pomodoroapp.ui.newpomodoro.view;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import javax.inject.Inject;
 
 import bicca.lucas.pomodoroapp.R;
 import bicca.lucas.pomodoroapp.databinding.FragmentNewPomodoroBinding;
+import bicca.lucas.pomodoroapp.ui.MainActivity;
 import bicca.lucas.pomodoroapp.ui.MainApplication;
 import bicca.lucas.pomodoroapp.ui.newpomodoro.interaction.NewPomodoroInteraction;
 import bicca.lucas.pomodoroapp.ui.newpomodoro.viewmodel.NewPomodoroViewModel;
@@ -34,6 +39,8 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     @Inject
     NewPomodoroViewModel viewModel;
     private long currentTime;
+    private String initialChronometerText = null;
+    private String finalChronometerText = null;
 
     public NewPomodoroFragment() {
         // Required empty public constructor
@@ -95,9 +102,11 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     private void initChonometer() {
         binding.fragmentNewPomodoroTimer.setCountDown(true);
         resetCount();
+        initialChronometerText = binding.fragmentNewPomodoroTimer.getText().toString();
         binding.fragmentNewPomodoroTimer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
+                finalChronometerText = chronometer.getText().toString();
                 currentTime = chronometer.getBase() - SystemClock.elapsedRealtime();
                 viewModel.validateFinish();
             }
@@ -112,7 +121,7 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     }
 
     private void resetCount() {
-        binding.fragmentNewPomodoroTimer.setBase(SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME);
+        binding.fragmentNewPomodoroTimer.setBase(viewModel.getChronometerBase());
     }
 
     @Override
@@ -132,12 +141,32 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
 
     @Override
     public void showNotification(String message) {
-        Intent intent = new Intent(getContext(), NotificationService.class);
-        intent.putExtra(getString(R.string.notification_intent_extras), message);
-        getActivity().startService(intent);
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getActivity().getString(R.string.app_name))
+                .setContentText(message)
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(15, builder.build());
+    }
+
+    @Override
+    public String getInitialChronometerText() {
+        return initialChronometerText;
+    }
+
+    @Override
+    public String getFinalChronometerText() {
+        return finalChronometerText;
     }
 
     private void restartChronometer() {
+        resetChronometerText();
         binding.fragmentNewPomodoroTimer.stop();
         resetCount();
         binding.fragmentNewPomodoroFab.setImageResource(R.drawable.ic_play_arrow_white);
@@ -151,5 +180,9 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     @Override
     public Context getContext() {
         return getActivity().getApplicationContext();
+    }
+
+    private void resetChronometerText() {
+        finalChronometerText = null;
     }
 }

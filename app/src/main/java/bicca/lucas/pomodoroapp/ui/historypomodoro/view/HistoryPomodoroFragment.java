@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -16,6 +20,7 @@ import javax.inject.Inject;
 import bicca.lucas.pomodoroapp.R;
 import bicca.lucas.pomodoroapp.databinding.FragmentHistoryPomodoroBinding;
 import bicca.lucas.pomodoroapp.ui.MainApplication;
+import bicca.lucas.pomodoroapp.ui.event.ReloadHistoryEvent;
 import bicca.lucas.pomodoroapp.ui.historypomodoro.interaction.HistoryPomodoroInteraction;
 import bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel.HistoryPomodoroViewModel;
 import bicca.lucas.pomodoroapp.ui.model.Pomodoro;
@@ -70,6 +75,7 @@ public class HistoryPomodoroFragment extends Fragment implements HistoryPomodoro
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history_pomodoro, container, false);
         injectDependecies();
+        EventBus.getDefault().register(this);
         viewModel.setInteraction(this);
         viewModel.loadHistory();
         binding.setHistoryPomodoroViewModel(viewModel);
@@ -109,5 +115,9 @@ public class HistoryPomodoroFragment extends Fragment implements HistoryPomodoro
     @Override
     public String getStringFromId(int stringId) {
         return getString(stringId);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReloadEvent(ReloadHistoryEvent event) {
     }
 }

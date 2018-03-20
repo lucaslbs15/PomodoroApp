@@ -9,4 +9,6 @@ public interface NewPomodoroInteraction extends InteractionBase {
     void finishPomodoro();
     long getCurrentTime();
     void showNotification(String message);
+    String getInitialChronometerText();
+    String getFinalChronometerText();
 }

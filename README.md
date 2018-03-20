@@ -23,5 +23,9 @@ layouts and minimize the glue code necessary to bind your application logic and 
 * A database library that provides an abstraction layer over SQLite 
 * Link: https://developer.android.com/topic/libraries/architecture/room.html
 
+#### EventBus
+* EventBus was used to simplify comunication between Activities, Fragments etc
+* Link: https://github.com/greenrobot/EventBus
+
 
 

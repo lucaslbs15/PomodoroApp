@@ -1,13 +1,16 @@
 package bicca.lucas.pomodoroapp.ui.newpomodoro.viewmodel;
 
 import android.databinding.BaseObservable;
-import android.util.Log;
+import android.os.SystemClock;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
 
 import javax.inject.Inject;
 
 import bicca.lucas.pomodoroapp.R;
+import bicca.lucas.pomodoroapp.ui.event.ReloadHistoryEvent;
 import bicca.lucas.pomodoroapp.ui.model.Pomodoro;
 import bicca.lucas.pomodoroapp.ui.model.StateEnum;
 import bicca.lucas.pomodoroapp.ui.newpomodoro.interaction.NewPomodoroInteraction;
@@ -18,7 +21,7 @@ public class NewPomodoroViewModel extends BaseObservable {
 
     private StateEnum state = StateEnum.STOPPED;
     private NewPomodoroInteraction interaction;
-    public static final long INITIAL_TIME = 1 * (1000 * 60);
+    private static final long INITIAL_TIME = 1 * (1000 * 60);
 
     @Inject
     public NewPomodoroViewModel() {
@@ -31,8 +34,9 @@ public class NewPomodoroViewModel extends BaseObservable {
     public void onActionClick() {
         switch (state) {
             case RUNNING:
-                interaction.stopPomodoro();
                 state = StateEnum.STOPPED;
+                finishPomodoro();
+                interaction.stopPomodoro();
                 break;
             case STOPPED:
             case FINISHED:
@@ -48,16 +52,17 @@ public class NewPomodoroViewModel extends BaseObservable {
 
     public void validateFinish() {
         if (interaction.getCurrentTime() < 0) {
+            state = StateEnum.FINISHED;
             finishPomodoro();
         }
     }
 
-    public void finishPomodoro() {
-        state = StateEnum.FINISHED;
+    private void finishPomodoro() {
         PomodoroRepository repository = new PomodoroRepository(interaction.getContext());
         if (repository.save(createPomodoro())) {
             interaction.finishPomodoro();
             interaction.showNotification(interaction.getStringFromId(R.string.notification_pomodoro_finished));
+            EventBus.getDefault().post(new ReloadHistoryEvent());
         }
     }
 
@@ -65,8 +70,21 @@ public class NewPomodoroViewModel extends BaseObservable {
         Pomodoro pomodoro = new Pomodoro();
         pomodoro.setDate(DateUtil.fromDateToString(new Date(), "dd/MM/yyyy"));
         pomodoro.setState(state.toString());
-        pomodoro.setTime(String.valueOf(interaction.getCurrentTime() / 1000));
+        pomodoro.setTime(getTimeFormatted());
         return pomodoro;
+    }
+
+    private String getTimeFormatted() {
+        String initialChronometerText = interaction.getInitialChronometerText();
+        String finalChronometerText = interaction.getFinalChronometerText();
+        long initialChronometerLong = DateUtil.fromChronometerToLong(initialChronometerText);
+        long finalChronometerLong = DateUtil.fromChronometerToLong(finalChronometerText);
+        long result = initialChronometerLong - finalChronometerLong;
+        return DateUtil.fromLongToChronometer(result);
+    }
+
+    public long getChronometerBase() {
+        return SystemClock.elapsedRealtime() + NewPomodoroViewModel.INITIAL_TIME;
     }
 
 }
