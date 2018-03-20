@@ -147,4 +147,9 @@ public class NewPomodoroFragment extends Fragment implements NewPomodoroInteract
     public String getStringFromId(int stringId) {
         return getString(stringId);
     }
+
+    @Override
+    public Context getContext() {
+        return getActivity().getApplicationContext();
+    }
 }

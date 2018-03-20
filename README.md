@@ -19,6 +19,9 @@ layouts and minimize the glue code necessary to bind your application logic and 
 * Is a dependecy injector framework and is very helpful
 * Link: http://square.github.io/dagger/
 
+#### Room Library
+* A database library that provides an abstraction layer over SQLite 
+* Link: https://developer.android.com/topic/libraries/architecture/room.html
 
 
 

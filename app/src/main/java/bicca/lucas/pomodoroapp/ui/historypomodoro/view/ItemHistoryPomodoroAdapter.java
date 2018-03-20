@@ -11,14 +11,14 @@ import java.util.ArrayList;
 
 import bicca.lucas.pomodoroapp.BR;
 import bicca.lucas.pomodoroapp.R;
-import bicca.lucas.pomodoroapp.ui.model.HistoryPomodoro;
+import bicca.lucas.pomodoroapp.ui.model.Pomodoro;
 
 public class ItemHistoryPomodoroAdapter extends RecyclerView.Adapter<ItemHistoryPomodoroAdapter.ItemHistoryPomodoroViewHolder> {
 
-    private ArrayList<HistoryPomodoro> items;
+    private ArrayList<Pomodoro> items;
     private Context context;
 
-    public ItemHistoryPomodoroAdapter(ArrayList<HistoryPomodoro> items, Context context) {
+    public ItemHistoryPomodoroAdapter(ArrayList<Pomodoro> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -32,7 +32,8 @@ public class ItemHistoryPomodoroAdapter extends RecyclerView.Adapter<ItemHistory
 
     @Override
     public void onBindViewHolder(ItemHistoryPomodoroViewHolder holder, int position) {
-        HistoryPomodoro item = items.get(position);
+        Pomodoro item = items.get(position);
+        item.setContext(context);
         holder.bind(item);
     }
 

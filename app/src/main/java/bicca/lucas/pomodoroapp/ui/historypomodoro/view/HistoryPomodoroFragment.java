@@ -2,7 +2,6 @@ package bicca.lucas.pomodoroapp.ui.historypomodoro.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,7 @@ import bicca.lucas.pomodoroapp.databinding.FragmentHistoryPomodoroBinding;
 import bicca.lucas.pomodoroapp.ui.MainApplication;
 import bicca.lucas.pomodoroapp.ui.historypomodoro.interaction.HistoryPomodoroInteraction;
 import bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel.HistoryPomodoroViewModel;
-import bicca.lucas.pomodoroapp.ui.model.HistoryPomodoro;
+import bicca.lucas.pomodoroapp.ui.model.Pomodoro;
 
 public class HistoryPomodoroFragment extends Fragment implements HistoryPomodoroInteraction {
     // TODO: Rename parameter arguments, choose names that match
@@ -93,12 +92,12 @@ public class HistoryPomodoroFragment extends Fragment implements HistoryPomodoro
     }
 
     @Override
-    public void showHistory(ArrayList<HistoryPomodoro> historyPomodoros) {
+    public void showHistory(ArrayList<Pomodoro> pomodoros) {
         binding.fragmentHistoryPomodoroRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.fragmentHistoryPomodoroRecycler.setLayoutManager(linearLayoutManager);
-        ItemHistoryPomodoroAdapter adapter = new ItemHistoryPomodoroAdapter(historyPomodoros, getContext());
+        ItemHistoryPomodoroAdapter adapter = new ItemHistoryPomodoroAdapter(pomodoros, getContext());
         binding.fragmentHistoryPomodoroRecycler.setAdapter(adapter);
     }
 

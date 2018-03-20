@@ -1,12 +1,9 @@
 package bicca.lucas.pomodoroapp.ui.historypomodoro.viewmodel;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import bicca.lucas.pomodoroapp.ui.historypomodoro.interaction.HistoryPomodoroInteraction;
-import bicca.lucas.pomodoroapp.ui.model.HistoryPomodoro;
-import bicca.lucas.pomodoroapp.ui.model.StateEnum;
+import bicca.lucas.pomodoroapp.ui.repository.PomodoroRepository;
 
 public class HistoryPomodoroViewModel {
 
@@ -21,15 +18,7 @@ public class HistoryPomodoroViewModel {
     }
 
     public void loadHistory() {
-        interaction.showHistory(getMocks());
+        PomodoroRepository repository = new PomodoroRepository(interaction.getContext());
+        interaction.showHistory(repository.listAll());
     }
-
-    private ArrayList<HistoryPomodoro> getMocks() {
-        ArrayList<HistoryPomodoro> pomodoros = new ArrayList<>();
-        pomodoros.add(new HistoryPomodoro(interaction.getContext(), "25:00", StateEnum.RUNNING, "17/03/2015"));
-        pomodoros.add(new HistoryPomodoro(interaction.getContext(), "24:00", StateEnum.STOPPED, "16/03/2015"));
-        pomodoros.add(new HistoryPomodoro(interaction.getContext(),"23:00", StateEnum.FINISHED, "15/03/2015"));
-        return pomodoros;
-    }
-
 }
