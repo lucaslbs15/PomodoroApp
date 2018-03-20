@@ -21,7 +21,7 @@ public class NewPomodoroViewModel extends BaseObservable {
 
     private StateEnum state = StateEnum.STOPPED;
     private NewPomodoroInteraction interaction;
-    private static final long INITIAL_TIME = 1 * (1000 * 60);
+    private static final long INITIAL_TIME = 25 * (1000 * 60);
 
     @Inject
     public NewPomodoroViewModel() {
