@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF4351</color>
+    <color name="colorPrimaryDark">#ae212b</color>
+    <color name="colorAccent">#FF4351</color>
+
+    <color name="colorWaitingState">#CCCCCC</color>
+    <color name="colorRunningState">#FF4351</color>
+    <color name="colorFabBackground">#FF4351</color>
+    
+    <color name="colorHistoryTime">@android:color/background_dark</color>
+    <color name="colorHistoryState">#918d8d</color>
+    <color name="colorHistoryDate">#918d8d</color>
+
+    <color name="colorTabUnselected">#CCCCCC</color>
+
+    <color name="colorIconNotification">@color/colorPrimaryDark</color>
+</resources>

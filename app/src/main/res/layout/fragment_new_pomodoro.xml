@@ -1,0 +1,33 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="newPomodoroViewModel"
+            type="bicca.lucas.pomodoroapp.ui.newpomodoro.viewmodel.NewPomodoroViewModel"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Chronometer
+            android:id="@+id/fragment_new_pomodoro_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:countDown="true"
+            android:textSize="@dimen/fragment_new_pomodoro_timer_size"
+            android:layout_gravity="center"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fragment_new_pomodoro_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_play_arrow_white"
+            android:layout_margin="@dimen/fragment_new_pomodoro_fab_margin"
+            android:onClick="@{() -> newPomodoroViewModel.onActionClick()}"/>
+
+    </FrameLayout>
+</layout>
